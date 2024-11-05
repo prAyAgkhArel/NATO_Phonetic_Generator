@@ -22,14 +22,20 @@
 
 import pandas
 
-#TODO 1. Create a dictionary in this format:
-#{"A": "Alfa", "B": "Bravo"}
 dataframe = pandas.read_csv("nato_phonetic_alphabet.csv")
+print(f"Dataframe:\n {dataframe}")
 dict_of_dataframe = {row.letter:row.code for (index, row) in dataframe.iterrows()}
+print(f"Dictionary of dataframe: \n{dict_of_dataframe}")
 
+def generate_phonetic_code():
+    user_input = input("Enter a word.\n").upper()
 
-#TODO 2. Create a list of the phonetic code words from a word that the user inputs.
+    try:
+        code_list = [dict_of_dataframe[letter] for letter in user_input]
+    except KeyError:
+        print("You are allowed to enter letters only.")
+        generate_phonetic_code()
+    else:
+        print(code_list)
 
-user_input = input("Enter a word. I will generate its phonetic code words.").upper()
-code_list = [dict_of_dataframe[letter] for letter in user_input]
-print(code_list)
+generate_phonetic_code()
